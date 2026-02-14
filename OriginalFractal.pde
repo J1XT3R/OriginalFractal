@@ -3,6 +3,10 @@ float shrink = 0.52f;
 float branchRot = 0.35f;
 boolean animate = true;
 
+int dPressCount = 0;
+int layers3D = 1;
+float layerStep = 10;
+
 void setup() {
   size(900, 700);
   smooth();
@@ -22,13 +26,27 @@ void draw() {
 
   float startSize = min(width, height) * 0.35f;
 
-  cornerBloom(0, 0, startSize, depth, rot, 200);
+  for (int i = layers3D - 1; i >= 0; i--) {
+    pushMatrix();
+
+    float off = i * layerStep;
+    translate(off, -off);
+
+    rotate(i * 0.06f);
+
+    float hue = 200 + i * 6;
+    float alpha = map(i, 0, max(1, layers3D - 1), 90, 25);
+
+    cornerBloom(0, 0, startSize * (1.0f - i * 0.02f), depth, rot, hue, alpha);
+
+    popMatrix();
+  }
 }
 
-void cornerBloom(float x, float y, float sz, int d, float rot, float hue) {
+void cornerBloom(float x, float y, float sz, int d, float rot, float hue, float alpha) {
   if (d <= 0 || sz < 2) return;
 
-  stroke(hue % 360, 70, 95, 85);
+  stroke(hue % 360, 70, 95, alpha);
   strokeWeight(max(1, sz * 0.02f));
   noFill();
 
@@ -41,10 +59,10 @@ void cornerBloom(float x, float y, float sz, int d, float rot, float hue) {
   float half = sz * 0.5f;
   float child = sz * shrink;
 
-  cornerBloom(x - half, y - half, child, d - 1, rot, hue + 18);
-  cornerBloom(x + half, y - half, child, d - 1, rot, hue + 18);
-  cornerBloom(x - half, y + half, child, d - 1, rot, hue + 18);
-  cornerBloom(x + half, y + half, child, d - 1, rot, hue + 18);
+  cornerBloom(x - half, y - half, child, d - 1, rot, hue + 18, alpha);
+  cornerBloom(x + half, y - half, child, d - 1, rot, hue + 18, alpha);
+  cornerBloom(x - half, y + half, child, d - 1, rot, hue + 18, alpha);
+  cornerBloom(x + half, y + half, child, d - 1, rot, hue + 18, alpha);
 }
 
 void keyPressed() {
@@ -59,10 +77,24 @@ void keyPressed() {
 
   if (key == ' ') animate = !animate;
 
+  if (key == 'd' || key == 'D') {
+    dPressCount++;
+    if (dPressCount % 3 == 0) {
+      layers3D = min(layers3D + 1, 25);
+    }
+  }
+
+  if (key == 'a' || key == 'A') {
+    layers3D = max(layers3D - 1, 1);
+  }
+
   if (key == 'r' || key == 'R') {
     depth = 8;
     shrink = 0.52f;
     branchRot = 0.35f;
     animate = true;
+
+    dPressCount = 0;
+    layers3D = 1;
   }
 }

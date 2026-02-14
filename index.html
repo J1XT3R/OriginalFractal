@@ -1,21 +1,42 @@
 <!DOCTYPE html>
-	<head>
-		<meta charset="utf-8">
-		<title>Title</title>
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="styles.css">
-		<script src="processing.js"></script>
-	</head>
-	<body>
-		<header>
-			<h1>Header</h1>
-		</header>
-			<section id="content">
-				<canvas id="OriginalFractal" data-processing-sources="OriginalFractal.pde">
-				</canvas>
-		    </section>
-	    <footer>
-		    Footer
-	    </footer>
-	</body>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Original Fractal</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="styles.css">
+	<script src="processing.js"></script>
+</head>
+
+<body style="font-family: 'Open Sans', sans-serif; background-color: #111; color: white; text-align: center;">
+
+	<header>
+		<h1>Corner Bloom Fractal (Interactive 3D Expansion)</h1>
+	</header>
+
+	<section id="controls" style="max-width: 800px; margin: 0 auto 30px auto; line-height: 1.8;">
+		<h2>Controls</h2>
+		<ul style="list-style: none; padding: 0;">
+			<li><strong>UP Arrow</strong> - Increase recursion depth</li>
+			<li><strong>DOWN Arrow</strong> - Decrease recursion depth</li>
+			<li><strong>LEFT Arrow</strong> - Decrease rotation</li>
+			<li><strong>RIGHT Arrow</strong> - Increase rotation</li>
+			<li><strong>W</strong> - Increase shrink factor</li>
+			<li><strong>S</strong> - Decrease shrink factor</li>
+			<li><strong>SPACE</strong> - Toggle animation</li>
+			<li><strong>R</strong> - Reset to default settings</li>
+			<br>
+			<li><strong>D</strong> - Add a new 3D layer (adds one layer every 3 presses)</li>
+			<li><strong>A</strong> - Remove one 3D layer</li>
+		</ul>
+	</section>
+
+	<section id="content">
+		<canvas id="OriginalFractal" data-processing-sources="OriginalFractal.pde">
+		</canvas>
+	</section>
+
+</body>
+
 </html>
